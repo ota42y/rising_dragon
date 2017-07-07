@@ -3,6 +3,8 @@ https://travis-ci.org/ota42y/rising_dragon.svg?branch=master
 
 Use AWS SQS/SNS as event worker for Microservices. 
 
+([Shoryuken](https://github.com/phstc/shoryuken) wrapper)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,6 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
+execute `bundle exec shoryuken -r steps_worker.rb`
 
 ### setting file
 ```ruby

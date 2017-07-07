@@ -1,8 +1,7 @@
 # RisingDragon
+https://travis-ci.org/ota42y/rising_dragon.svg?branch=master
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rising_dragon`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Use AWS SQS/SNS as event worker for Microservices. 
 
 ## Installation
 

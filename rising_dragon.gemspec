@@ -11,8 +11,10 @@ Gem::Specification.new do |spec|
   spec.email         = ['ota42y@gmail.com']
 
   spec.summary       = 'Event driven architecture library for AWS SNS/SQS'
-  spec.homepage      = 'https://ota42y.com'
-  spec.description   = 'Event driven architecture library for AWS SNS/SQS'
+  spec.homepage      = 'https://github.com/ota42y/rising_dragon'
+  spec.description   = 'Event driven architecture library for AWS SNS/SQS include SQS worker and SNS publisher'
+  spec.license       = 'MIT'
+
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -30,10 +32,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'shoryuken'
+  spec.add_dependency 'shoryuken', '~> 0'
 
   spec.add_development_dependency 'bundler', '~> 1.14'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'pry-byebug'
+  spec.add_development_dependency 'pry', '~> 0'
+  spec.add_development_dependency 'pry-byebug', '~> 0'
 end

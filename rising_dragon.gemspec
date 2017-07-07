@@ -14,12 +14,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/ota42y/rising_dragon'
   spec.description   = 'Event driven architecture library for AWS SNS/SQS include SQS worker and SNS publisher'
   spec.license       = 'MIT'
-
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
+  
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    # allow push to any host
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'

@@ -4,7 +4,7 @@ module RisingDragon
   module SQS
     class Emitter
       def initialize
-        @handlers = Hash.new
+        @handlers = {}
       end
 
       def register(event_name, handler_class)
@@ -26,9 +26,7 @@ module RisingDragon
       end
 
       def ignore(event_name)
-        on(event_name) do |_event|
-          # do nothing
-        end
+        @handlers.delete(event_name)
       end
 
       def list
@@ -47,17 +45,18 @@ module RisingDragon
 
       def event_from_json(json_text)
         json = JSON.parse(json_text)
+        msg = json['Message']
 
-        type = json['type']
-        data = json['data']
-        id = json['id']
-        timestamp = Time.at(json['timestamp'] / 1000.0)
+        id = msg['id']
+        type = msg['type']
+        timestamp = Time.at(msg['timestamp'] / 1000.0)
+        data = msg['data']
 
-        ::RisingDragon::Event.new(type: type, id: id, timestamp: timestamp, data: data)
+        ::RisingDragon::Event.new(id: id, type: type, timestamp: timestamp, data: data)
       end
 
       def emit_sns_msg(body)
-        event = event_from_json(body['Message'])
+        event = event_from_json(body)
         emit_event(event)
       end
     end

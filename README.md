@@ -22,7 +22,44 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'rising_dragon'
+require 'securerandom'
+
+class StepEventHandler < ::RisingDragon::SQS::Handler
+  def handle(event)
+    puts event.type
+    puts event.data
+    puts event.id
+    puts event.timestamp
+  end
+end
+
+class SQSWorker
+  include RisingDragon::SQS::Worker
+
+  rising_dragon_options queue: "test", auto_delete: true
+
+  def self.register_handlers(emitter)
+    emitter.register "StepEvent", StepEventHandler
+    emitter.ignore "RequlEvent"
+  end
+end
+
+body_hash = {
+    Message: {
+        type: "StepEvent",
+        data: {
+            "id": 42,
+            "datetime": DateTime.new(2016, 04, 01, 16, 00, 00, "+09:00")
+        },
+        id: SecureRandom.uuid,
+        timestamp: (Time.now.to_f * 1000).to_i
+    }
+}
+
+SQSWorker.new.perform("msg", body_hash.to_json)
+```
 
 ## Development
 

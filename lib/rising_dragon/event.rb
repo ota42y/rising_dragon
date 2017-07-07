@@ -1,11 +1,11 @@
 module RisingDragon
   class Event
-    attr_reader :type, :data, :id, :timestamp
-    def initialize(type, id, timestamp, data)
-      @type = type
-      @data = data
+    attr_reader :id, :type, :timestamp, :data
+    def initialize(id:, type:, timestamp:, data:)
       @id = id
+      @type = type
       @timestamp = timestamp
+      @data = data
     end
   end
 end

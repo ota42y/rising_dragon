@@ -1,5 +1,3 @@
-require "shoryuken"
-
 module RisingDragon
   module SQS
     module Worker
@@ -11,20 +9,23 @@ module RisingDragon
       end
 
       module ClassMethods
-        def rising_dragon_options(opt = {})
-          shoryuken_options(opt)
+        def rising_dragon_options(sqs_queue_name, weight, group, opt = {})
+          shoryuken_opt = { queue: sqs_queue_name }.merge(opt)
+          shoryuken_options(shoryuken_opt)
+
+          Shoryuken.add_queue(sqs_queue_name, weight, group)
         end
 
-        def register_handlers(_emitter)
-          raise "Overwrite self.register_handlers"
+        def rising_dragon_register(event_name, handle_class)
+          emitter.register(event_name, handle_class)
+        end
+
+        def rising_dragon_ignore(event_name)
+          emitter.ignore(event_name)
         end
 
         def emitter
-          return @emitter if @emitter
-
-          @emitter = ::RisingDragon::SQS::Emitter.new
-          register_handlers(@emitter)
-          @emitter
+          @emitter ||= ::RisingDragon::SQS::Emitter.new
         end
       end
 

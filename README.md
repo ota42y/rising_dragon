@@ -22,11 +22,22 @@ Or install it yourself as:
 
 ## Usage
 
+
+### setting file
 ```ruby
+# steps_worker.rb
+
 require 'rising_dragon'
 require 'securerandom'
 
-class StepEventHandler < ::RisingDragon::SQS::Handler
+RisingDragon.sqs_client = Aws::SQS::Client.new(
+  secret_access_key: Settings.aws.secret_access_key,
+  access_key_id:     Settings.aws.access_key_id,
+  region:            Settings.aws.steps_sqs.region
+)
+RisingDragon.add_group("default_group", 25)
+
+class StepsEventHandler < ::RisingDragon::SQS::Handler
   def handle(event)
     puts event.type
     puts event.data
@@ -38,18 +49,20 @@ end
 class SQSWorker
   include RisingDragon::SQS::Worker
 
-  rising_dragon_options queue: "test", auto_delete: true
-
-  def self.register_handlers(emitter)
-    emitter.register "StepEvent", StepEventHandler
-    emitter.ignore "RequlEvent"
-  end
+  rising_dragon_options "SQSQueueName", 1, "default_group", auto_delete: true
+  
+  rising_dragon_register "StepsEvent", StepsEventHandler
+  rising_dragon_ignore "IgnoreEvent"
 end
+```
 
-body_hash = {
+### event structure
+```ruby
+{
     Message: {
-        type: "StepEvent",
+        type: "StepsEvent",
         data: {
+            # write youre event data
             "id": 42,
             "datetime": DateTime.new(2016, 04, 01, 16, 00, 00, "+09:00")
         },
@@ -57,8 +70,6 @@ body_hash = {
         timestamp: (Time.now.to_f * 1000).to_i
     }
 }
-
-SQSWorker.new.perform("msg", body_hash.to_json)
 ```
 
 ## Development

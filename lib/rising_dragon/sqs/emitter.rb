@@ -35,11 +35,8 @@ module RisingDragon
 
       def emit_event(event)
         handler = @handlers[event.type]
-        unless handler
-          raise "RisingDragon::SQS::Emitter handler is not registered. event_name: #{event.type}"
-        end
+        handler.new.handle(event) if handler
 
-        handler.new.handle(event)
         nil
       end
 

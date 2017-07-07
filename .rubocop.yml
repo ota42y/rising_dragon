@@ -9,3 +9,6 @@ AllCops:
 
 RSpec/ExampleLength:
   Max: 100
+
+RSpec/MultipleExpectations:
+  Max: 30

@@ -1,4 +1,4 @@
-require 'json'
+require "json"
 
 module RisingDragon
   module SQS
@@ -45,12 +45,12 @@ module RisingDragon
 
       def event_from_json(json_text)
         json = JSON.parse(json_text)
-        msg = json['Message']
+        msg = json["Message"]
 
-        id = msg['id']
-        type = msg['type']
-        timestamp = Time.at(msg['timestamp'] / 1000.0)
-        data = msg['data']
+        id = msg["id"]
+        type = msg["type"]
+        timestamp = Time.at(msg["timestamp"] / 1000.0)
+        data = msg["data"]
 
         ::RisingDragon::Event.new(id: id, type: type, timestamp: timestamp, data: data)
       end

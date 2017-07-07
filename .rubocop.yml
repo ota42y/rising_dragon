@@ -1,0 +1,11 @@
+inherit_gem:
+  onkcop:
+    - 'config/rubocop.yml'
+    - 'config/rspec.yml'
+
+AllCops:
+  TargetRubyVersion: 2.4
+  DisplayStyleGuide: true
+
+RSpec/ExampleLength:
+  Max: 100

@@ -1,4 +1,4 @@
-require 'shoryuken'
+require "shoryuken"
 
 module RisingDragon
   module SQS
@@ -16,7 +16,7 @@ module RisingDragon
         end
 
         def register_handlers(_emitter)
-          raise 'Overwrite self.register_handlers'
+          raise "Overwrite self.register_handlers"
         end
 
         def emitter

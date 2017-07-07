@@ -1,5 +1,6 @@
+[![Build Status](https://travis-ci.org/ota42y/rising_dragon.svg?branch=master)](https://travis-ci.org/ota42y/rising_dragon)
+
 # RisingDragon
-https://travis-ci.org/ota42y/rising_dragon.svg?branch=master
 
 Use AWS SQS/SNS as event worker for Microservices. 
 

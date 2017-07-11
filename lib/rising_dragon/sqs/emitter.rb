@@ -40,9 +40,8 @@ module RisingDragon
         nil
       end
 
-      def event_from_json(json_text)
-        json = JSON.parse(json_text)
-        msg = json["Message"]
+      def event_from_json(body)
+        msg = JSON.parse(body["Message"])
 
         id = msg["id"]
         type = msg["type"]

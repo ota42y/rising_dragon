@@ -31,7 +31,7 @@ describe RisingDragon::SQS::Worker do
 
   it do
     body_hash = {
-      Message: {
+      "Message" => {
         type: "StepEvent",
         data: {
           "id": 42,
@@ -39,12 +39,12 @@ describe RisingDragon::SQS::Worker do
         },
         id: id,
         timestamp: timestamp,
-      },
+      }.to_json,
     }
 
     test_class_handler
 
-    TestSQSWorker.new.perform("msg", body_hash.to_json)
+    TestSQSWorker.new.perform("msg", body_hash)
 
     expect(test_class_handler).to have_received(:handle) do |event|
       expect(event.id).to eq id
@@ -57,38 +57,38 @@ describe RisingDragon::SQS::Worker do
 
   it "IgnoreEvent" do
     body_hash = {
-      Message: {
+      "Message" => {
         type: ignore_event,
         data: {
           "event": "event",
         },
         id: id,
         timestamp: timestamp,
-      },
+      }.to_json,
     }
 
     test_class_handler
 
-    TestSQSWorker.new.perform("msg", body_hash.to_json)
+    TestSQSWorker.new.perform("msg", body_hash)
 
     expect(test_class_handler).not_to have_received(:handle)
   end
 
   it "UnKnownEvent" do
     body_hash = {
-      Message: {
+      "Message" => {
         type: "UnKnownEvent",
         data: {
           "event": "event",
         },
         id: id,
         timestamp: timestamp,
-      },
+      }.to_json,
     }
 
     test_class_handler
 
-    TestSQSWorker.new.perform("msg", body_hash.to_json)
+    TestSQSWorker.new.perform("msg", body_hash)
 
     expect(test_class_handler).not_to have_received(:handle)
   end

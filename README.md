@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ota42y/rising_dragon.svg?branch=master)](https://travis-ci.org/ota42y/rising_dragon)
+[![Dependency Status](https://gemnasium.com/badges/github.com/ota42y/rising_dragon.svg)](https://gemnasium.com/github.com/ota42y/rising_dragon)
 
 # RisingDragon
 

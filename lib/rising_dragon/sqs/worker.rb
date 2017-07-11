@@ -10,7 +10,7 @@ module RisingDragon
 
       module ClassMethods
         def rising_dragon_options(sqs_queue_name, weight, group, opt = {})
-          shoryuken_opt = { queue: sqs_queue_name }.merge(opt)
+          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json }.merge(opt)
           shoryuken_options(shoryuken_opt)
 
           Shoryuken.add_queue(sqs_queue_name, weight, group)

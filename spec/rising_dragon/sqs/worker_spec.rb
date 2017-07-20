@@ -13,9 +13,18 @@ describe RisingDragon::SQS::Worker do
     d
   end
 
+  # test class....
+  class RescueClass
+    def call(_e)
+    end
+  end
+
   class HandleTestClass < ::RisingDragon::SQS::Handler
     def handle(_event)
     end
+  end
+
+  class NotOverwriteHandle < ::RisingDragon::SQS::Handler
   end
 
   class TestSQSWorker
@@ -24,7 +33,12 @@ describe RisingDragon::SQS::Worker do
     rising_dragon_options "SQSQueueName", "default_group"
 
     rising_dragon_register "StepEvent", HandleTestClass
+    rising_dragon_register "NotOverwriteEvent", NotOverwriteHandle
     rising_dragon_ignore "IgnoreEvent"
+
+    def rescue_from(e)
+      RescueClass.new.call(e)
+    end
   end
 
   it do
@@ -89,5 +103,28 @@ describe RisingDragon::SQS::Worker do
     TestSQSWorker.new.perform("msg", body_hash)
 
     expect(test_class_handler).not_to have_received(:handle)
+  end
+
+  it "NotOverwriteEvent" do
+    body_hash = {
+      "Message" => {
+        type: "NotOverwriteEvent",
+        data: {
+          "event": "event",
+        },
+        id: id,
+        timestamp: timestamp,
+      }.to_json,
+    }
+
+    test_class_handler
+
+    d = instance_double("RescueClass")
+    allow(RescueClass).to receive(:new).and_return(d)
+    allow(d).to receive(:call)
+
+    TestSQSWorker.new.perform("msg", body_hash)
+
+    expect(d).to have_received(:call).once
   end
 end

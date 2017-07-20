@@ -13,8 +13,6 @@ describe RisingDragon::SQS::Worker do
     d
   end
 
-  RisingDragon.add_group("default_group", 25)
-
   class HandleTestClass < ::RisingDragon::SQS::Handler
     def handle(_event)
     end
@@ -23,7 +21,7 @@ describe RisingDragon::SQS::Worker do
   class TestSQSWorker
     include RisingDragon::SQS::Worker
 
-    rising_dragon_options "SQSQueueName", 1, "default_group", auto_delete: true
+    rising_dragon_options "SQSQueueName", "default_group"
 
     rising_dragon_register "StepEvent", HandleTestClass
     rising_dragon_ignore "IgnoreEvent"

@@ -40,7 +40,6 @@ RisingDragon.sqs_client = Aws::SQS::Client.new(
   access_key_id:     Settings.aws.access_key_id,
   region:            Settings.aws.steps_sqs.region
 )
-RisingDragon.add_group("default_group", 25)
 
 class StepsEventHandler < ::RisingDragon::SQS::Handler
   def handle(event)
@@ -54,7 +53,7 @@ end
 class SQSWorker
   include RisingDragon::SQS::Worker
 
-  rising_dragon_options "SQSQueueName", 1, "default_group", auto_delete: true
+  rising_dragon_options "SQSQueueName", "default_group"
   
   rising_dragon_register "StepsEvent", StepsEventHandler
   rising_dragon_ignore "IgnoreEvent"

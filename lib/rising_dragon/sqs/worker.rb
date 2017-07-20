@@ -9,11 +9,19 @@ module RisingDragon
       end
 
       module ClassMethods
-        def rising_dragon_options(sqs_queue_name, weight, group, opt = {})
-          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json }.merge(opt)
+        def rising_dragon_options(sqs_queue_name, group_name, opt = {})
+          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json, auto_delete: true }.merge(opt)
           shoryuken_options(shoryuken_opt)
 
-          Shoryuken.add_queue(sqs_queue_name, weight, group)
+          register_queue(sqs_queue_name, group_name, opt)
+        end
+
+        def register_queue(sqs_queue_name, group_name, option)
+          concurrency = option[:concurrency] || 25
+          Shoryuken.add_group(group_name, concurrency)
+
+          weight = option[:weight] || 1
+          Shoryuken.add_queue(sqs_queue_name, weight, group_name)
         end
 
         def rising_dragon_register(event_name, handle_class)

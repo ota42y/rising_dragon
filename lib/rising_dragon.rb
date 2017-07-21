@@ -9,5 +9,5 @@ require "rising_dragon/sqs/worker"
 
 module RisingDragon
   extend SingleForwardable
-  def_delegators(:Shoryuken, :sqs_client)
+  def_delegators(:Shoryuken, :sqs_client,  :sqs_client=)
 end

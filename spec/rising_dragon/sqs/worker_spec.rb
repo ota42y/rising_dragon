@@ -30,7 +30,7 @@ describe RisingDragon::SQS::Worker do
   class TestSQSWorker
     include RisingDragon::SQS::Worker
 
-    rising_dragon_options "SQSQueueName", "default_group"
+    rising_dragon_options "SQSQueueName"
 
     rising_dragon_register "StepEvent", HandleTestClass
     rising_dragon_register "NotOverwriteEvent", NotOverwriteHandle

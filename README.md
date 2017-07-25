@@ -53,7 +53,7 @@ end
 class SQSWorker
   include RisingDragon::SQS::Worker
 
-  rising_dragon_options "SQSQueueName", "default_group"
+  rising_dragon_options "SQSQueueName"
   
   rising_dragon_register "StepsEvent", StepsEventHandler
   rising_dragon_ignore "IgnoreEvent"

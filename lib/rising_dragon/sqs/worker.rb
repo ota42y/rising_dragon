@@ -9,11 +9,11 @@ module RisingDragon
       end
 
       module ClassMethods
-        def rising_dragon_options(sqs_queue_name, group_name, opt = {})
-          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json, auto_delete: true }.merge(opt)
+        def rising_dragon_options(sqs_queue_name, opt = {})
+          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json, auto_delete: true, shoryuken_group: "default_group" }.merge(opt)
           shoryuken_options(shoryuken_opt)
 
-          register_queue(sqs_queue_name, group_name, opt)
+          register_queue(sqs_queue_name, shoryuken_opt[:shoryuken_group], opt)
         end
 
         def register_queue(sqs_queue_name, group_name, option)

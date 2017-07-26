@@ -6,5 +6,10 @@ module RisingDragon
         raise ::RisingDragon::UnOverwriteHandle
       end
     end
+
+    class EmptyHandler
+      def handle(_event)
+      end
+    end
   end
 end

@@ -26,7 +26,11 @@ module RisingDragon
       end
 
       def ignore(event_name)
-        @handlers.delete(event_name)
+        unless event_name.is_a?(String)
+          raise "event_name must be String, but it's #{event_name.class}. event_name: #{event_name}"
+        end
+
+        @handlers[event_name] = ::RisingDragon::SQS::EmptyHandler
       end
 
       def list
@@ -35,7 +39,9 @@ module RisingDragon
 
       def emit_event(event)
         handler = @handlers[event.type]
-        handler.new.handle(event) if handler
+        raise ::RisingDragon::UnRegisterEvent unless handler
+
+        handler.new.handle(event)
 
         nil
       end

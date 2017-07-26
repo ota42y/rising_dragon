@@ -127,4 +127,27 @@ describe RisingDragon::SQS::Worker do
 
     expect(d).to have_received(:call).once
   end
+
+  it "UnRegisterEvent" do
+    body_hash = {
+      "Message" => {
+        type: "UnRegisterEvent",
+        data: {
+          "event": "event",
+        },
+        id: id,
+        timestamp: timestamp,
+      }.to_json,
+    }
+
+    test_class_handler
+
+    d = instance_double("RescueClass")
+    allow(RescueClass).to receive(:new).and_return(d)
+    allow(d).to receive(:call)
+
+    TestSQSWorker.new.perform("msg", body_hash)
+
+    expect(d).to have_received(:call).once
+  end
 end

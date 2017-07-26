@@ -1,5 +1,3 @@
-require "json"
-
 module RisingDragon
   module SQS
     class Emitter

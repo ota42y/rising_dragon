@@ -1,5 +1,4 @@
 require "spec_helper"
-require "securerandom"
 
 describe RisingDragon::SQS::Worker do
   let(:ignore_event) { "IgnoreEvent" }

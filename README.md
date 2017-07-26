@@ -23,17 +23,33 @@ And then execute:
 Or install it yourself as:
 
     $ gem install rising_dragon
+    
+## Publisher Usage
+```ruby
+require 'aws-sdk'
+require 'rising_dragon'
 
-## Usage
+sns_client = Aws::SNS::Client.new(
+    access_key_id: Settings.aws.access_key_id,
+    secret_access_key: Settings.aws.secret_access_key,
+    region: Settings.aws.region,
+)
+
+publisher = ::RisingDragon::SNS::Publisher.new(sns_client)
+
+data = { id: 1, name: "first last" }
+publisher.send_event!("SNSTopicName", "EventType", data)
+```
+
+## Worker Usage
 
 execute `bundle exec shoryuken -r steps_worker.rb`
 
 ### setting file
 ```ruby
 # steps_worker.rb
-
+require 'aws-sdk'
 require 'rising_dragon'
-require 'securerandom'
 
 RisingDragon.sqs_client = Aws::SQS::Client.new(
   secret_access_key: Settings.aws.secret_access_key,

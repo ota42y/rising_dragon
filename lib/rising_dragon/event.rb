@@ -7,5 +7,14 @@ module RisingDragon
       @timestamp = timestamp
       @data = data
     end
+
+    def to_json(*option)
+      {
+        id: @id,
+        type: @type,
+        timestamp: @timestamp,
+        data: @data,
+      }.to_json(*option)
+    end
   end
 end

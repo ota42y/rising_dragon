@@ -31,14 +31,14 @@ describe RisingDragon::SNS::Publisher do
         expect(json["data"]["name"]).to eq data[:name]
       end
 
-      publisher.send_event!(topic_name, event_type, data)
+      publisher.publish(topic_name, event_type, data)
     end
 
     it "use cache" do
       allow(stub_sns_client).to receive(:publish)
 
-      publisher.send_event!(topic_name, event_type, data)
-      publisher.send_event!(topic_name, event_type, data)
+      publisher.publish(topic_name, event_type, data)
+      publisher.publish(topic_name, event_type, data)
 
       expect(stub_sns_client).to have_received(:publish).twice
       expect(stub_sns_client).to have_received(:create_topic).once
@@ -48,8 +48,8 @@ describe RisingDragon::SNS::Publisher do
       allow(stub_sns_client).to receive(:publish)
 
       publisher.use_cache = false
-      publisher.send_event!(topic_name, event_type, data)
-      publisher.send_event!(topic_name, event_type, data)
+      publisher.publish(topic_name, event_type, data)
+      publisher.publish(topic_name, event_type, data)
 
       expect(stub_sns_client).to have_received(:publish).twice
       expect(stub_sns_client).to have_received(:create_topic).twice

@@ -38,7 +38,7 @@ sns_client = Aws::SNS::Client.new(
 publisher = ::RisingDragon::SNS::Publisher.new(sns_client)
 
 data = { id: 1, name: "first last" }
-publisher.send_event!("SNSTopicName", "EventType", data)
+publisher.publish("SNSTopicName", "EventType", data)
 ```
 
 ## Worker Usage

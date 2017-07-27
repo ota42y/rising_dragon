@@ -8,7 +8,7 @@ module RisingDragon
         @use_cache = true # default true :)
       end
 
-      def send_event!(topic_name, event_type, data)
+      def publish(topic_name, event_type, data)
         event = create_event(event_type, data)
 
         topic = get_topic(topic_name)

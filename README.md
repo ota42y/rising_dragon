@@ -13,7 +13,7 @@ Use AWS SQS/SNS as event worker for Microservices.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rising_dragon', '>= 0.3.1'
+gem 'rising_dragon', '>= 0.3.2'
 ```
 
 And then execute:

@@ -10,7 +10,7 @@ module RisingDragon
 
       module ClassMethods
         def rising_dragon_options(sqs_queue_name, opt = {})
-          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json, auto_delete: true, shoryuken_group: "default_group" }.merge(opt)
+          shoryuken_opt = { queue: sqs_queue_name, body_parser: :json, auto_delete: true, shoryuken_group: "default" }.merge(opt)
           shoryuken_options(shoryuken_opt)
 
           register_queue(sqs_queue_name, shoryuken_opt["shoryuken_group"], opt) # shoryuken_options will change hash key.... :(

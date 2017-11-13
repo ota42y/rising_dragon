@@ -37,7 +37,7 @@ module RisingDragon
 
       def emit_event(event)
         handler = @handlers[event.type]
-        raise ::RisingDragon::UnRegisterEvent unless handler
+        raise ::RisingDragon::UnRegisterEvent, "event_type: `#{event.type}` is unregistered" unless handler
 
         handler.new.handle(event)
 

@@ -39,4 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "onkcop", "~> 0.49.1"
   spec.add_development_dependency "pry", "~> 0.10"
   spec.add_development_dependency "pry-byebug", "~> 3.4"
+  spec.add_development_dependency "aws-sdk-core", ">= 3"
+  spec.add_development_dependency "aws-sdk-sqs"
 end

@@ -45,12 +45,12 @@ module RisingDragon
       end
 
       def event_from_json(body)
-        msg = JSON.parse(body["Message"])
+        msg = JSON.parse(body['Message'])
 
-        id = msg["id"]
-        type = msg["type"]
-        timestamp = Time.at(msg["timestamp"] / 1000.0)
-        data = msg["data"]
+        id = msg['id']
+        type = msg['type']
+        timestamp = Time.at(msg['timestamp'] / 1000.0)
+        data = msg['data']
 
         ::RisingDragon::Event.new(id: id, type: type, timestamp: timestamp, data: data)
       end

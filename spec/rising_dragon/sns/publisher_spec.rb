@@ -1,13 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe RisingDragon::SNS::Publisher do
   let(:stub_sns_client) { double }
   let(:publisher) { ::RisingDragon::SNS::Publisher.new(stub_sns_client) }
 
-  context "correct" do
-    let(:topic_name) { "UserManager" }
-    let(:event_type) { "UpdateUserData" }
-    let(:data) { { id: 1, name: "first last" } }
+  context 'when correct' do
+    let(:topic_name) { 'UserManager' }
+    let(:event_type) { 'UpdateUserData' }
+    let(:data) { { id: 1, name: 'first last' } }
     let(:stub_arn) { double }
     let(:stub_topic) do
       stub_topic = double
@@ -24,17 +24,17 @@ describe RisingDragon::SNS::Publisher do
         expect(arg[:topic_arn]).to eq(stub_arn)
 
         json = JSON.parse(arg[:message])
-        expect(json["id"].is_a?(String)).to eq true
-        expect(json["timestamp"].is_a?(Integer)).to eq true
-        expect(json["type"]).to eq event_type
-        expect(json["data"]["id"]).to eq data[:id]
-        expect(json["data"]["name"]).to eq data[:name]
+        expect(json['id'].is_a?(String)).to eq true
+        expect(json['timestamp'].is_a?(Integer)).to eq true
+        expect(json['type']).to eq event_type
+        expect(json['data']['id']).to eq data[:id]
+        expect(json['data']['name']).to eq data[:name]
       end
 
       publisher.publish(topic_name, event_type, data)
     end
 
-    it "use cache" do
+    it 'use cache' do
       allow(stub_sns_client).to receive(:publish)
 
       publisher.publish(topic_name, event_type, data)
@@ -44,7 +44,7 @@ describe RisingDragon::SNS::Publisher do
       expect(stub_sns_client).to have_received(:create_topic).once
     end
 
-    it "not use cache" do
+    it 'not use cache' do
       allow(stub_sns_client).to receive(:publish)
 
       publisher.use_cache = false

@@ -1,14 +1,10 @@
 inherit_gem:
-  onkcop:
-    - 'config/rubocop.yml'
+  fincop:
+    - 'config/rails.yml'
     - 'config/rspec.yml'
+    - 'config/rubocop.yml'
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
+
   DisplayStyleGuide: true
-
-RSpec/ExampleLength:
-  Max: 100
-
-RSpec/MultipleExpectations:
-  Max: 30

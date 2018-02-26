@@ -18,7 +18,7 @@ module RisingDragon
       private
 
         def create_event(type, data)
-          ::RisingDragon::Event.new(id: uuid, timestamp: unixtime, type: type, data: data)
+          ::RisingDragon::Event.new(id: uuid, timestamp: unixtime, type: type, data: data, sqs_msg: nil)
         end
 
         def uuid

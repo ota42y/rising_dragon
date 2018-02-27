@@ -37,8 +37,8 @@ module RisingDragon
         end
       end
 
-      def perform(_sqs_msg, body)
-        self.class.emitter.emit_sns_msg(body)
+      def perform(sqs_msg, body)
+        self.class.emitter.emit_sqs_msg(sqs_msg, body)
       rescue StandardError => e
         rescue_from(e)
       end

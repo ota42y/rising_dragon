@@ -44,7 +44,7 @@ module RisingDragon
         nil
       end
 
-      def event_from_json(sqs_msg, body)
+      def event_from_json(body)
         msg = JSON.parse(body['Message'])
 
         id = msg['id']
@@ -52,11 +52,11 @@ module RisingDragon
         timestamp = Time.at(msg['timestamp'] / 1000.0)
         data = msg['data']
 
-        ::RisingDragon::Event.new(id: id, type: type, timestamp: timestamp, data: data, sqs_msg: sqs_msg)
+        ::RisingDragon::Event.new(id: id, type: type, timestamp: timestamp, data: data)
       end
 
-      def emit_sqs_msg(sqs_msg, body)
-        event = event_from_json(sqs_msg, body)
+      def emit_sns_msg(body)
+        event = event_from_json(body)
         emit_event(event)
       end
     end

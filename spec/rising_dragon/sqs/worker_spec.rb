@@ -12,16 +12,6 @@ describe RisingDragon::SQS::Worker do
     d
   end
 
-  let(:sqs_client_mock) { instance_double('Aws::SQS::Client') }
-  let(:queue_mock) do
-    d = instance_double('Shoryuken::Queue')
-    allow(d).to receive(:url).and_return(queue_url)
-    allow(d).to receive(:name).and_return(queue_name)
-    d
-  end
-  let(:queue_url) { 'aws_queue_url' }
-  let(:queue_name) { 'aws_queue_name' }
-
   # test class....
   class RescueClass
     def call(_e)
@@ -63,22 +53,9 @@ describe RisingDragon::SQS::Worker do
       }.to_json,
     }
 
-    message_data = {
-      message_id: :message_id,
-      receipt_handle: :receipt_handle,
-      md5_of_body: :md5_of_body,
-      body: body_hash.to_json,
-      attributes: :attributes,
-      md5_of_message_attributes: :md5_of_message_attributes,
-      message_attributes: :message_attributes
-    }
-
-    message = ::Aws::SQS::Types::Message.new(message_data)
-    sqs_message = ::Shoryuken::Message.new(sqs_client_mock, queue_mock, message)
-
     test_class_handler
 
-    TestSQSWorker.new.perform(sqs_message, body_hash)
+    TestSQSWorker.new.perform('msg', body_hash)
 
     expect(test_class_handler).to have_received(:handle) do |event|
       expect(event.id).to eq id
@@ -86,10 +63,6 @@ describe RisingDragon::SQS::Worker do
       expect(event.type).to eq 'StepEvent'
       expect(event.data['id']).to eq 42
       expect(event.data['datetime']).to eq '2016-04-01T16:00:00+09:00'
-
-      allow(sqs_client_mock).to receive(:delete_message).with(queue_url: queue_url, receipt_handle: :receipt_handle)
-      event.delete!
-      expect(sqs_client_mock).to have_received(:delete_message).with(queue_url: queue_url, receipt_handle: :receipt_handle).once
     end
   end
 
